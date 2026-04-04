@@ -1,19 +1,27 @@
-interface Diagnosis {
+export const Gender = {
+  Male: "male",
+  Female: "female",
+  Other: "other",
+} as const;
+
+export type GenderType = (typeof Gender)[keyof typeof Gender];
+
+export type DiagnosisEntry = {
   code: string;
   name: string;
   latin?: string;
-}
+};
 
-interface Patientor {
+export type PatientorEntry = {
   id: string;
   name: string;
   dateOfBirth: string;
   ssn: string;
-  gender: string;
+  gender: GenderType;
   occupation: string;
-}
+};
 
-const data: { diagnoses: Diagnosis[]; patientors: Patientor[] } = {
+const data: { diagnoses: DiagnosisEntry[]; patientors: PatientorEntry[] } = {
   diagnoses: [
     {
       code: "M24.2",
