@@ -1,24 +1,9 @@
-export const Gender = {
-  Male: "male",
-  Female: "female",
-  Other: "other",
-} as const;
-
-export type GenderType = (typeof Gender)[keyof typeof Gender];
+import { type PatientorEntry } from "./type.ts";
 
 export type DiagnosisEntry = {
   code: string;
   name: string;
   latin?: string;
-};
-
-export type PatientorEntry = {
-  id: string;
-  name: string;
-  dateOfBirth: string;
-  ssn: string;
-  gender: GenderType;
-  occupation: string;
 };
 
 const data: { diagnoses: DiagnosisEntry[]; patientors: PatientorEntry[] } = {
