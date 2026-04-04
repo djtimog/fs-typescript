@@ -14,7 +14,7 @@ app.get("/hello", (_, res) => {
 app.get("/bmi", (req, res) => {
   const { height, weight } = req.query;
 
-  if (isNotNumber(height) || isNotNumber(weight)) {
+  if (!height || !weight || isNotNumber(height) || isNotNumber(weight)) {
     res.status(400).json({
       error: "malformatted parameters",
     });
@@ -23,19 +23,20 @@ app.get("/bmi", (req, res) => {
 
   const bmi = calculateBmi(Number(weight), Number(height));
 
-  res.json({ height, weight, bmi });
+  res.json({ height: Number(height), weight: Number(weight), bmi });
 });
 
 app.post("/exercises", (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { daily_exercises, target } = req.body;
 
-  if (
-    !daily_exercises ||
-    !target ||
-    isNotNumber(target) ||
-    !isArrayOfNumbers(daily_exercises)
-  ) {
+  if (!daily_exercises || !target) {
+    res.status(400).json({
+      error: "parameters missing",
+    });
+    return;
+  }
+  if (isNotNumber(target) || !isArrayOfNumbers(daily_exercises)) {
     res.status(400).json({
       error: "malformatted parameters",
     });
@@ -46,6 +47,6 @@ app.post("/exercises", (req, res) => {
   res.json(result);
 });
 
-app.listen("3003", () => {
-  console.log("server running on http://localhost:3003");
+app.listen("3000", () => {
+  console.log("server running on http://localhost:3000");
 });
