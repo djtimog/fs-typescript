@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction } from "express";
-import { NewPatientSchema } from "./type.ts";
+import { NewEntrySchema, NewPatientSchema } from "./type.ts";
 import z from "zod";
 
 export const newPatientorParser = (
@@ -24,6 +24,19 @@ export const errorMiddleware = (
   if (error instanceof z.ZodError) {
     res.status(400).send({ error: error.issues });
   } else {
+    next(error);
+  }
+};
+
+export const newEntryParser = (
+  req: Request,
+  _res: Response,
+  next: NextFunction,
+) => {
+  try {
+    req.body = NewEntrySchema.parse(req.body);
+    next();
+  } catch (error) {
     next(error);
   }
 };

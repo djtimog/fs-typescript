@@ -1,7 +1,8 @@
 import express, { type Response } from "express";
 import cors from "cors";
-import data, { type DiagnosisEntry } from "./lib/data.ts";
+import data from "./lib/data.ts";
 import patientorRouter from "./routers/patientor.router.ts";
+import { type DiagnosisEntry } from "./lib/type.ts";
 const app = express();
 
 app.use(express.json());
